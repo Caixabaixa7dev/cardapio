@@ -1,0 +1,30 @@
+window.botpress.init({
+  "botId": "03e8fefe-32f0-458b-8e68-ffab5890afe8",
+  "configuration": {
+    "version": "v2",
+    "botName": "Memed",
+    "botAvatar": "https://files.bpcontent.cloud/2026/01/05/16/20260105164752-S3XV2X6A.png",
+    "fabImage": "https://files.bpcontent.cloud/2026/01/05/17/20260105175435-O8QJ5NGD.png",
+    "website": {},
+    "email": {},
+    "phone": {},
+    "termsOfService": {},
+    "privacyPolicy": {},
+    "color": "#3276EA",
+    "variant": "solid",
+    "headerVariant": "solid",
+    "themeMode": "light",
+    "fontFamily": "inter",
+    "radius": 4,
+    "feedbackEnabled": false,
+    "showPoweredBy": false,
+    "footer": "",
+    "soundEnabled": false,
+    "toggleChatId": "bp-toggle-chat",
+    "proactiveMessageEnabled": false,
+    "proactiveBubbleMessage": "Hi! 👋 Need help?",
+    "proactiveBubbleTriggerType": "afterDelay",
+    "proactiveBubbleDelayTime": 10
+  },
+  "clientId": "d6a6e011-2284-495e-bdad-67b1cc834549"
+});

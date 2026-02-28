@@ -1,9 +1,10 @@
 import { ArrowLeft, Instagram, Info, MapPin, Star, Bike, Wallet } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import logoImg from '../assets/logo.png';
+import { useWhiteLabel } from '../context/WhiteLabelContext';
 
 export default function Header({ onViewChange, currentView }) {
+    const { settings } = useWhiteLabel();
     const [userLocation, setUserLocation] = useState('Buscando localização...');
     const [distance, setDistance] = useState('1,6km');
 
@@ -27,8 +28,8 @@ export default function Header({ onViewChange, currentView }) {
     }, []);
     return (
         <div className="bg-gray-50 flex flex-col mb-2 relative">
-            {/* Capa / Background Superior (Pode ser uma cor sólida roxa ou uma imagem de açaí) */}
-            <div className="h-32 bg-gradient-to-r from-purple-800 to-purple-600 w-full relative">
+            {/* Capa / Background Superior */}
+            <div className="h-32 w-full relative transition-colors" style={{ backgroundColor: 'var(--cover)' }}>
                 {currentView === 'checkout' && (
                     <button
                         className="absolute top-4 left-4 z-50 flex items-center gap-2 bg-black/20 hover:bg-black/30 backdrop-blur px-3 py-1.5 rounded-full transition-colors"
@@ -46,20 +47,35 @@ export default function Header({ onViewChange, currentView }) {
                 {/* Logo Centralizada sobrepondo a borda */}
                 <div className="absolute -top-14 left-1/2 -translate-x-1/2 rounded-full p-1 bg-white shadow-md">
                     <img
-                        src={logoImg}
-                        alt="Açai Rino"
-                        className="w-24 h-24 rounded-full object-cover border-4 border-purple-800"
+                        src={settings?.logoUrl || "/temp_logo.webp"}
+                        alt={settings?.storeName || "Loja Delivery"}
+                        className="w-24 h-24 rounded-full object-cover border-4"
+                        style={{ borderColor: 'var(--primary)' }}
                     />
                 </div>
 
-                <h1 className="text-2xl font-black text-purple-900 mt-2 tracking-tight">Açai Rino Delivery</h1>
+                <h1 className="text-2xl font-black mt-2 tracking-tight" style={{ color: 'var(--primary)' }}>
+                    {settings?.storeName || 'Loja Delivery'}
+                </h1>
 
                 {/* Botões Sociais e de Informação */}
                 <div className="flex gap-3 mt-3 mb-4">
-                    <a href="#" className="w-10 h-10 rounded-full border border-purple-200 text-purple-700 flex items-center justify-center hover:bg-purple-50 transition-colors">
-                        <Instagram size={20} />
-                    </a>
-                    <button className="w-10 h-10 rounded-full border border-purple-200 text-purple-700 flex items-center justify-center hover:bg-purple-50 transition-colors">
+                    {settings?.instagramUrl && (
+                        <a
+                            href={settings.instagramUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-10 h-10 rounded-full border flex items-center justify-center hover:opacity-80 transition-opacity bg-white shadow-sm"
+                            style={{ color: 'var(--primary)', borderColor: 'var(--primary)' }}
+                        >
+                            <Instagram size={20} />
+                        </a>
+                    )}
+                    <button
+                        onClick={() => document.getElementById('store-footer')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="w-10 h-10 rounded-full border flex items-center justify-center hover:opacity-80 transition-opacity bg-white shadow-sm"
+                        style={{ color: 'var(--primary)', borderColor: 'var(--primary)' }}
+                    >
                         <Info size={20} />
                     </button>
                 </div>

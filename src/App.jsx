@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-ro
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from 'sonner';
 import { CartProvider } from './context/CartContext';
+import { WhiteLabelProvider } from './context/WhiteLabelContext';
 import MenuScreen from './components/MenuScreen';
 import IFoodCartScreen from './components/IFoodCartScreen';
 import IFoodDeliveryScreen from './components/IFoodDeliveryScreen';
@@ -12,6 +13,8 @@ import AdminLogin from './components/AdminLogin';
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './components/AdminDashboard';
 import AdminMenu from './components/AdminMenu';
+import AdminColheita from './components/AdminColheita';
+import AdminSettings from './components/AdminSettings';
 import './App.css';
 
 // A wrapper to show the header only on the Menu screen and slide transitions
@@ -48,20 +51,24 @@ function CartSheetWrapper() {
 function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
-        <Toaster position="bottom-center" toastOptions={{ style: { background: '#333', color: '#fff', border: 'none' } }} />
-        <Routes>
-          {/* Admin Routes (Full Width, No Header/Cart wrappers) */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="menu" element={<AdminMenu />} />
-          </Route>
+      <WhiteLabelProvider>
+        <CartProvider>
+          <Toaster position="bottom-center" toastOptions={{ style: { background: '#333', color: '#fff', border: 'none' } }} />
+          <Routes>
+            {/* Admin Routes (Full Width, No Header/Cart wrappers) */}
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="menu" element={<AdminMenu />} />
+              <Route path="colheita" element={<AdminColheita />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
 
-          {/* Customer Application (Wrapped with AppContent logic) */}
-          <Route path="*" element={<AppContent />} />
-        </Routes>
-      </CartProvider>
+            {/* Customer Application (Wrapped with AppContent logic) */}
+            <Route path="*" element={<AppContent />} />
+          </Routes>
+        </CartProvider>
+      </WhiteLabelProvider>
     </BrowserRouter>
   );
 }

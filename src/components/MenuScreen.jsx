@@ -58,9 +58,10 @@ export default function MenuScreen() {
                         whileTap={{ scale: 0.95 }}
                         key={cat.id}
                         className={`whitespace-nowrap px-4 py-1.5 rounded-full font-medium text-sm transition-colors ${activeCategory === cat.id
-                            ? 'bg-[#6B21A8] text-white shadow-md'
+                            ? 'text-white shadow-md'
                             : 'bg-gray-100 text-gray-600 border border-gray-200'
                             }`}
+                        style={activeCategory === cat.id ? { backgroundColor: 'var(--primary)' } : {}}
                         onClick={() => setActiveCategory(cat.id)}
                     >
                         {cat.label}

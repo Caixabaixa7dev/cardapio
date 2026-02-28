@@ -1,0 +1,106 @@
+new (function (w) {
+    var POST_LOG_API = 'https://sherlock-api.memed.com.br/v1/log';
+    var self = this;
+
+    self.authorization = null;
+    self.requestId = null;
+    self.originalConsole = {};
+    self.translateMethod = {
+        fatal: 'error',
+        debug: 'log',
+    };
+    self.translateLevel = {
+        log: 'debug',
+    };
+    self.enableErrorCapture = false;
+
+    w.setSherlockKey = function (key) {
+        self.authorization = key;
+    };
+
+    w.setSherlockRequestId = function (requestId) {
+        self.requestId = requestId;
+    };
+
+    w.setSherlockEnableErrorCapture = function (value) {
+        self.enableErrorCapture = value;
+    };
+
+    self.filter = function (level, data) {
+        var result = {};
+
+        result['level'] = level;
+        result['message'] = 'undefined' === typeof data['message'] ? data : data['message'];
+        result['fields'] = 'undefined' === typeof data['fields'] ? {} : data['fields'];
+
+        if(w.location.pathname)
+          result.fields['path'] = w.location.pathname;
+        if (w.location.search)
+          result.fields['query'] = w.location.search;
+
+        if (Array.isArray(result['message'])) {
+          var message = result['message'];
+          result['message'] = 'string' === typeof message[0] ? message[0] : 'Logging Object';
+
+          if (arguments.length === 2 && arguments[1].length === 2) {
+            result['fields'] = Object.assign(result['fields'], arguments[1][1]);
+          } else {
+            result['fields'] = Object.assign(result['fields'], {arguments: message});
+          }
+        }
+
+        return result;
+    };
+
+    self.log = function (level, data) {
+        data = self.filter(level, data);
+
+        if (null !== self.authorization) {
+            var client = new w.XMLHttpRequest();
+            client.open('POST', POST_LOG_API);
+            client.setRequestHeader('authorization', self.authorization);
+
+            if (null !== self.requestId) {
+                client.setRequestHeader('x-requestId', self.requestId);
+            }
+
+            client.setRequestHeader('content-type', 'application/json');
+            client.send(JSON.stringify(data));
+        }
+
+        self.requestId = null;
+    };
+
+    self.overrideConsole = function (level) {
+        self.originalConsole[level] = 'undefined' !== typeof self.originalConsole[self.translateMethod[level]] ?
+            self.originalConsole[self.translateMethod[level]] :
+            w.console[level];
+
+        w.console[level] = function () {
+            var data = 1 === arguments.length ? arguments[0] : [...arguments];
+
+            var translatedLevel = 'undefined' === typeof self.translateLevel[level] ?
+                level :
+                self.translateLevel[level];
+
+            self.log(translatedLevel, data);
+
+            self.originalConsole[level](...arguments);
+        };
+    };
+
+    var levels = ['log', 'info', 'warn', 'error', 'fatal', 'debug'];
+
+    for (var i = 0; i < levels.length; i++) {
+        self.overrideConsole(levels[i]);
+    }
+
+    self.originalOnError = w.onerror;
+
+    w.addEventListener('error', (event) => {
+        if (self.enableErrorCapture) {
+            // the `event.error` is the instance of Error in which we have stackTrace
+            w.console.error(event.message);
+        }
+    });
+})(window);

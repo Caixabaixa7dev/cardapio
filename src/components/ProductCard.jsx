@@ -20,7 +20,7 @@ export default function ProductCard({ product, onClick }) {
                         onClick={onClick}
                         aria-label="Adicionar"
                     >
-                        <Plus size={18} className="text-[#6B21A8]" />
+                        <Plus size={18} style={{ color: 'var(--primary)' }} />
                     </motion.button>
                 </div>
             </div>

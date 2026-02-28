@@ -1,0 +1,87 @@
+=============================================================
+GUIA DE CONFIGURAÇÃO E IMPLANTAÇÃO - PROJETO X (WHITE LABEL)
+=============================================================
+
+Este documento contém o passo a passo completo de como configurar o sistema, 
+o banco de dados (Firebase), o gateway de pagamento (Veopag), o Bot do WhatsApp 
+e como realizar o deploy final do aplicativo no Vercel.
+
+-------------------------------------------------------------
+1. PRÉ-REQUISITOS E INSTALAÇÃO LOCAL
+-------------------------------------------------------------
+1. Ter o Node.js instalado (versão 18 ou superior).
+2. Ter o Git instalado.
+3. No terminal, acesse a pasta do projeto e instale as dependências:
+   > npm install
+4. Para rodar o projeto localmente para testes:
+   > npm run dev
+
+-------------------------------------------------------------
+2. CONFIGURAÇÃO DO FIREBASE (BANCO DE DADOS)
+-------------------------------------------------------------
+O aplicativo usa o Firebase Firestore para armazenar o cardápio, pedidos e configurações (White Label).
+
+1. Acesse https://console.firebase.google.com/ e crie um novo projeto.
+2. Ative o "Firestore Database" em modo de Teste (ou configure as regras de segurança depois).
+3. Vá em "Configurações do Projeto" > "Seus aplicativos", e adicione um aplicativo Web.
+4. Copie o objeto "firebaseConfig" (apiKey, authDomain, projectId, etc).
+5. No código do projeto, cole essas credenciais no arquivo responsável:
+   > `src/services/firebase.js`
+   
+Coleções criadas e utilizadas pelo sistema:
+- `products`: Contém os itens do cardápio e categorias.
+- `settings/storeProfile`: Contém as configurações dinâmicas (Nome, Cor, Logo, CNPJ, Infos).
+- `orders`: Onde o frontend salva os pedidos para que o Admin e o Bot os visualizem.
+
+-------------------------------------------------------------
+3. CONFIGURAÇÃO DA CHAVE DE PAGAMENTO (VEOPAG)
+-------------------------------------------------------------
+A integração Pix é feita utilizando a API da VEOPAG.
+
+1. Acesse o painel da sua conta VEOPAG.
+2. Adquira suas credenciais de API (Client ID / Access Token ou API Key).
+3. No código, procure o local onde as requisições Pix são geradas:
+   > Normalmente no seu Backend/API integrado ou em `src/services/payment.js` (ou arquivo similar do frontend que faz a requisição Pix).
+4. Substitua o token de autorização padrão pelo seu Token de Produção gerado na VEOPAG.
+5. Lembre-se de configurar o Webhook da Veopag para apontar para o seu servidor escutando eventos de "Pagamento Aprovado" (caso automatize a baixa).
+
+-------------------------------------------------------------
+4. CONFIGURAÇÃO DO BOT DO WHATSAPP (BAILEYS / WHATSAPP-WEB.JS)
+-------------------------------------------------------------
+O Bot é um servidor Node.js separado (ou integrado ao backend) que envia as mensagens para os clientes e monitora atualizações.
+
+1. Navegue até a pasta onde o código do Bot está hospedado.
+2. Instale as dependências: `npm install`.
+3. Inicie o bot: `node index.js` ou `npm start`.
+4. Um QR Code será impresso no terminal.
+5. Abra o WhatsApp do celular da loja > Aparelhos Conectados > Ler QR Code.
+6. A partir desse momento, as mensagens de confirmação de pedido interceptadas no banco de dados serão enviadas automaticamente para o cliente.
+   * Dica para produção: Hospedar este bot numa VPS (Hostinger, AWS, DigitalOcean) usando o `pm2` para mantê-lo online 24h.
+
+-------------------------------------------------------------
+5. DEPLOY DO FRONTEND NO VERCEL
+-------------------------------------------------------------
+Para colocar o aplicativo na internet para seus clientes acessarem:
+
+1. Suba todo o código (Frontend) para um repositório no GitHub.
+   - `git add .`
+   - `git commit -m "Versao Final"`
+   - `git push origin main`
+2. Crie uma conta no https://vercel.com (pode logar com o próprio Github).
+3. Clique em "Add New..." > "Project".
+4. Selecione o repositório do seu App no Github.
+5. O Vercel geralmente detecta que é um projeto **Vite / React**. 
+   - Framework Preset: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+6. Se tiver variáveis de ambiente (.env), adicione-as na seção "Environment Variables".
+7. Clique em **Deploy**.
+8. Em cerca de um minuto, seu sistema receberá um link gratuito (ex: sua-loja.vercel.app).
+9. (Opcional) No Vercel, vá em Settings > Domains e adicione seu domínio '.com.br'.
+
+=============================================================
+PRONTO! O ECOSSISTEMA ESTÁ CONFIGURADO.
+Se for criar um novo aplicativo para um novo cliente, basta duplicar o 
+projeto no Vercel, criar um novo projeto no Firebase, atrelar as novas 
+chaves de banco e configurar uma nova API Key da Veopag.
+=============================================================

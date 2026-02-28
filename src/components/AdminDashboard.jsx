@@ -64,7 +64,8 @@ export default function AdminDashboard() {
                         <button
                             key={p}
                             onClick={() => setPeriod(p)}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold capitalize transition-colors ${period === p ? 'bg-[#6B21A8] text-white' : 'text-gray-600 hover:bg-gray-100'}`}
+                            className={`px-4 py-2 rounded-lg text-sm font-bold capitalize transition-colors ${period === p ? 'text-white' : 'text-gray-600 hover:bg-gray-100'}`}
+                            style={period === p ? { backgroundColor: 'var(--primary)' } : {}}
                         >
                             {p === 'todos' ? 'Todo Período' : p}
                         </button>

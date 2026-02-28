@@ -82,7 +82,7 @@ export default function IFoodDeliveryScreen() {
             className="flex flex-col min-h-screen bg-gray-50 pb-24 font-sans"
         >
             <header className="sticky top-0 z-50 bg-white shadow-sm flex items-center justify-between p-4 mb-2">
-                <button onClick={() => navigate(-1)} className="p-1 text-purple-600 rounded-full active:bg-gray-100 transition-colors">
+                <button onClick={() => navigate(-1)} className="p-1 rounded-full active:bg-gray-100 transition-colors" style={{ color: 'var(--primary)' }}>
                     <ArrowLeft size={24} />
                 </button>
                 <h1 className="font-bold text-gray-800 text-lg flex-1 text-center">Como deseja receber?</h1>
@@ -94,7 +94,8 @@ export default function IFoodDeliveryScreen() {
                 <div className="grid grid-cols-2 gap-4 mb-4">
                     <button
                         onClick={() => setMethod('delivery')}
-                        className={`border rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all ${method === 'delivery' ? 'border-purple-600 bg-purple-50 text-purple-600 shadow-sm' : 'border-gray-200 text-gray-500'}`}
+                        className={`border rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all ${method === 'delivery' ? 'bg-gray-50 shadow-sm' : 'border-gray-200 text-gray-500'}`}
+                        style={method === 'delivery' ? { borderColor: 'var(--primary)', color: 'var(--primary)' } : {}}
                     >
                         <MapPin size={32} />
                         <span className="font-medium text-sm">Entregar em casa</span>
@@ -102,7 +103,8 @@ export default function IFoodDeliveryScreen() {
 
                     <button
                         onClick={() => setMethod('pickup')}
-                        className={`border rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all ${method === 'pickup' ? 'border-purple-600 bg-purple-50 text-purple-600 shadow-sm' : 'border-gray-200 text-gray-500'}`}
+                        className={`border rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-all ${method === 'pickup' ? 'bg-gray-50 shadow-sm' : 'border-gray-200 text-gray-500'}`}
+                        style={method === 'pickup' ? { borderColor: 'var(--primary)', color: 'var(--primary)' } : {}}
                     >
                         <Store size={32} />
                         <span className="font-medium text-sm">Retirar no balcão</span>
@@ -179,7 +181,8 @@ export default function IFoodDeliveryScreen() {
                 <button
                     onClick={handleContinue}
                     disabled={!isFormValid}
-                    className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-md disabled:bg-gray-300 disabled:text-gray-500 active:bg-purple-800 transition-colors"
+                    className="w-full text-white font-bold py-3.5 rounded-md disabled:bg-gray-300 disabled:text-gray-500 transition-colors hover:opacity-90"
+                    style={{ backgroundColor: !isFormValid ? '' : 'var(--primary)' }}
                 >
                     Continuar
                 </button>

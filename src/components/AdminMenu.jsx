@@ -183,7 +183,8 @@ export default function AdminMenu() {
                 <button
                     onClick={handleSeedDb}
                     disabled={migrating}
-                    className="bg-[#6B21A8] text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-purple-800 transition-colors disabled:opacity-50"
+                    className="text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition-colors disabled:opacity-50 hover:opacity-90"
+                    style={{ backgroundColor: 'var(--primary)' }}
                 >
                     {migrating ? 'Migrando dados...' : 'Importar Cardápio Padrão'}
                 </button>
@@ -200,7 +201,8 @@ export default function AdminMenu() {
                 </div>
                 <button
                     onClick={() => { setEditingCategory({ isNew: true }); setCatName(''); }}
-                    className="bg-purple-100 text-[#6B21A8] font-bold px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-purple-200 transition-colors"
+                    className="bg-gray-100 font-bold px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-200 transition-colors"
+                    style={{ color: 'var(--primary)' }}
                 >
                     <Plus size={18} /> Nova Categoria
                 </button>
@@ -214,7 +216,8 @@ export default function AdminMenu() {
                         <div className="flex items-center gap-2">
                             <button
                                 onClick={() => { setEditingCategory({ fbId: cat.fbId, title: cat.title }); setCatName(cat.title); }}
-                                className="p-2 text-gray-400 hover:text-[#6B21A8] hover:bg-purple-50 rounded-lg transition-colors"
+                                className="p-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-colors"
+                                style={{ hover: { color: 'var(--primary)' } }}
                             >
                                 <Pencil size={18} />
                             </button>
@@ -251,7 +254,7 @@ export default function AdminMenu() {
                                                 customizations: prod.customizations || []
                                             });
                                         }}
-                                        className="p-2 text-gray-400 hover:text-[#6B21A8] hover:bg-purple-50 rounded-lg transition-colors"
+                                        className="p-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-colors"
                                     >
                                         <Pencil size={18} />
                                     </button>
@@ -267,7 +270,7 @@ export default function AdminMenu() {
 
                         <button
                             onClick={() => { setEditingProduct({ catFbId: cat.fbId, isNew: true }); setProdData({ name: '', description: '', price: 0, image: '', customizations: [] }); }}
-                            className="mt-2 text-sm text-gray-500 font-bold border-2 border-dashed rounded-xl p-3 flex items-center justify-center gap-2 hover:bg-gray-50 hover:text-[#6B21A8] hover:border-purple-200 transition-colors"
+                            className="mt-2 text-sm text-gray-500 font-bold border-2 border-dashed rounded-xl p-3 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors"
                         >
                             <Plus size={16} /> Adicionar Produto em {cat.title}
                         </button>
@@ -293,7 +296,8 @@ export default function AdminMenu() {
                         <button
                             onClick={handleSaveCategory}
                             disabled={!catName.trim()}
-                            className="w-full bg-[#6B21A8] text-white font-bold py-3 rounded-xl disabled:bg-gray-300 flex items-center justify-center gap-2"
+                            className="w-full text-white font-bold py-3 rounded-xl disabled:bg-gray-300 flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                            style={{ backgroundColor: !catName.trim() ? '' : 'var(--primary)' }}
                         >
                             <Save size={18} /> Salvar
                         </button>
@@ -501,7 +505,8 @@ export default function AdminMenu() {
                                                         newCust[cIdx].options.push({ id: `new_${Date.now()}`, name: 'Novo Item', price: 0 });
                                                         setProdData(p => ({ ...p, customizations: newCust }));
                                                     }}
-                                                    className="w-full mt-2 text-[10px] text-[#6B21A8] font-bold py-1.5 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+                                                    className="w-full mt-2 text-[10px] font-bold py-1.5 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                                    style={{ color: 'var(--primary)' }}
                                                 >
                                                     + Criar Item Vazio
                                                 </button>
@@ -515,7 +520,8 @@ export default function AdminMenu() {
                         <button
                             onClick={handleSaveProduct}
                             disabled={!prodData.name.trim() || uploadingImage}
-                            className="w-full mt-6 bg-[#6B21A8] text-white font-bold py-3.5 rounded-xl disabled:bg-gray-300 flex items-center justify-center gap-2 active:bg-purple-800 transition-colors"
+                            className="w-full mt-6 text-white font-bold py-3.5 rounded-xl disabled:bg-gray-300 flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+                            style={{ backgroundColor: (!prodData.name.trim() || uploadingImage) ? '' : 'var(--primary)' }}
                         >
                             <Save size={20} /> Salvar Produto
                         </button>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { AlertCircle, Ticket, X } from 'lucide-react';
+import { useWhiteLabel } from '../context/WhiteLabelContext';
 
 export default function CouponSplash() {
     const { availableCoupons } = useCart();
+    const { storeName } = useWhiteLabel();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -65,7 +67,7 @@ export default function CouponSplash() {
                             <div className="flex-1 pl-6">
                                 <h3 className="font-black text-lg text-gray-900">{coupon.title}</h3>
                                 <p className="text-xs text-gray-500 font-medium">
-                                    Apenas no Açai Rino<br />
+                                    Apenas no {storeName || 'Açai Rino'}<br />
                                     {coupon.description}
                                 </p>
                             </div>

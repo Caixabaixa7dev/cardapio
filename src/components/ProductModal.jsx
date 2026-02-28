@@ -130,7 +130,8 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
                     {/* Botão de Fechar fixo em cima da imagem */}
                     <button
                         onClick={onClose}
-                        className="absolute top-4 left-4 w-10 h-10 bg-white rounded-full flex items-center justify-center text-purple-600 shadow-md active:scale-90 transition-transform"
+                        className="absolute top-4 left-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform"
+                        style={{ color: 'var(--primary)' }}
                     >
                         <ArrowLeft size={24} />
                     </button>
@@ -144,7 +145,7 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
                         {product.description && (
                             <p className="text-sm text-gray-500 mt-2 leading-relaxed">{product.description}</p>
                         )}
-                        <p className="text-[#6B21A8] font-black text-xl mt-3">
+                        <p className="font-black text-xl mt-3" style={{ color: 'var(--primary)' }}>
                             A partir de {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
                         </p>
                     </div>
@@ -188,21 +189,25 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
                                                 <div className="flex-1 pr-4">
                                                     <p className="text-sm font-medium text-gray-700">{option.name}</p>
                                                     {option.price > 0 && (
-                                                        <p className="text-sm text-purple-600 font-medium">+ {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(option.price)}</p>
+                                                        <p className="text-sm font-medium" style={{ color: 'var(--primary)' }}>+ {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(option.price)}</p>
                                                     )}
                                                 </div>
 
                                                 {/* Controles (Checkbox vs Stepper) */}
                                                 <div>
                                                     {isCheckbox ? (
-                                                        <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${qty > 0 ? 'bg-purple-600 border-purple-600 text-white' : 'border-gray-300'}`}>
+                                                        <div
+                                                            className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${qty > 0 ? 'text-white' : 'border-gray-300'}`}
+                                                            style={qty > 0 ? { backgroundColor: 'var(--primary)', borderColor: 'var(--primary)' } : {}}
+                                                        >
                                                             {qty > 0 && <Check size={16} strokeWidth={3} />}
                                                         </div>
                                                     ) : (
                                                         <div className="flex items-center bg-gray-50 border rounded-lg h-10 w-24">
                                                             <button
                                                                 onClick={(e) => { e.stopPropagation(); handleSelectOption(group.id, option, -1, false, group.max); }}
-                                                                className={`flex-1 flex justify-center items-center text-gray-500 ${qty === 0 ? 'opacity-30' : 'active:text-purple-600'}`}
+                                                                className={`flex-1 flex justify-center items-center text-gray-500 transition-colors hover:bg-gray-50 ${qty === 0 ? 'opacity-30' : ''}`}
+                                                                style={qty > 0 ? { color: 'var(--primary)' } : {}}
                                                                 disabled={qty === 0}
                                                             >
                                                                 <Minus size={18} />
@@ -210,7 +215,8 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
                                                             <span className="w-6 text-center text-sm font-medium">{qty}</span>
                                                             <button
                                                                 onClick={(e) => { e.stopPropagation(); handleSelectOption(group.id, option, 1, false, group.max); }}
-                                                                className={`flex-1 flex justify-center items-center active:text-purple-600 text-purple-600 ${isMaxReached ? 'opacity-30' : ''}`}
+                                                                className={`flex-1 flex justify-center items-center transition-colors hover:bg-gray-50 ${isMaxReached ? 'opacity-30' : ''}`}
+                                                                style={{ color: 'var(--primary)' }}
                                                                 disabled={isMaxReached}
                                                             >
                                                                 <Plus size={18} />
@@ -244,7 +250,8 @@ export default function ProductModal({ product, isOpen, onClose, onAdd }) {
                         whileTap={{ scale: isFormValid ? 0.96 : 1 }}
                         disabled={!isFormValid}
                         onClick={handleConfirm}
-                        className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-lg disabled:opacity-50 disabled:bg-gray-300 transition-colors flex justify-between items-center px-4"
+                        className="w-full text-white font-bold py-3.5 rounded-lg disabled:opacity-50 disabled:bg-gray-300 transition-colors flex justify-between items-center px-4 hover:opacity-90"
+                        style={{ backgroundColor: !isFormValid ? '' : 'var(--primary)' }}
                     >
                         <span>Adicionar</span>
                         <span>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(finalPrice)}</span>

@@ -27,7 +27,10 @@ export default function AdminLogin() {
                 className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm border border-gray-100"
             >
                 <div className="flex justify-center mb-6">
-                    <div className="w-16 h-16 bg-purple-100 text-[#6B21A8] rounded-full flex items-center justify-center">
+                    <div
+                        className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center transition-colors"
+                        style={{ color: 'var(--primary)' }}
+                    >
                         <Lock size={32} />
                     </div>
                 </div>
@@ -65,7 +68,8 @@ export default function AdminLogin() {
                     <motion.button
                         whileTap={{ scale: 0.97 }}
                         type="submit"
-                        className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-xl shadow-md active:bg-purple-800 transition-colors mt-2"
+                        className="w-full text-white font-bold py-3.5 rounded-xl shadow-md transition-colors mt-2 hover:opacity-90"
+                        style={{ backgroundColor: 'var(--primary)' }}
                     >
                         Entrar no Painel
                     </motion.button>

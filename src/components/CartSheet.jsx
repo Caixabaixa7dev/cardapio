@@ -19,12 +19,16 @@ export default function CartSheet({ onCheckout }) {
                     <motion.button
                         whileTap={{ scale: 0.98 }}
                         onClick={onCheckout}
-                        className="w-full bg-[#6B21A8] text-white rounded-xl shadow-[0_8px_30px_rgb(255,43,98,0.3)] p-4 flex items-center justify-between font-bold"
+                        className="w-full text-white rounded-xl shadow-[0_8px_30px_rgb(255,43,98,0.3)] p-4 flex items-center justify-between font-bold"
+                        style={{ backgroundColor: 'var(--primary)' }}
                     >
                         <div className="flex items-center gap-3">
                             <div className="relative">
                                 <ShoppingBag size={24} />
-                                <span className="absolute -top-1 -right-2 bg-white text-[#6B21A8] text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-[#6B21A8]">
+                                <span
+                                    className="absolute -top-1 -right-2 bg-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2"
+                                    style={{ color: 'var(--primary)', borderColor: 'var(--primary)' }}
+                                >
                                     {cartCount}
                                 </span>
                             </div>

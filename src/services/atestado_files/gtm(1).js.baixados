@@ -1,0 +1,43 @@
+function getGtmID() {
+    const path = "x-ray-tracker/rudderstack/";
+    for (const i in document.scripts) {
+      if (document.scripts[i]) {
+        const script = document.scripts[i].src;
+        if (script && script.indexOf(path) > 0) {
+          const pieces = script.split("?id=");
+          return pieces[1];
+        }
+      }
+    }
+    return "";
+  }
+  function loadScript(GTM_ID) {
+    const script = document.createElement("script");
+    script.text = `<!-- Google Tag Manager -->
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', '${GTM_ID}');
+    <!--End Google Tag Manager -->`;
+    document.head.prepend(script);
+  }
+  function loadGtm(href) {
+    window.dataLayer = window.dataLayer || [];
+    const hasMemed = window.location.host === "memed.com.br";
+    const hasModule = Boolean(href.indexOf("/modulos/") > 0);
+    const hasAssistant = Boolean(href.indexOf("assistant.memed.com.br") > 0);
+    if (hasAssistant || hasMemed || hasMemed && hasModule) {
+      const GTM_ID = getGtmID();
+      loadScript(GTM_ID);
+    }
+  }
+  function gtm() {
+    const { href } = window.location;
+    loadGtm(href);
+  }
+  gtm();
+  

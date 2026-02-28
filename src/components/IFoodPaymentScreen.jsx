@@ -131,7 +131,8 @@ export default function IFoodPaymentScreen() {
 
                 <button
                     onClick={() => navigator.clipboard.writeText(pixData.qrcode)}
-                    className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-md active:bg-purple-800"
+                    className="w-full text-white font-bold py-3.5 rounded-md transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: 'var(--primary)' }}
                 >
                     Copiar código PIX
                 </button>
@@ -143,7 +144,7 @@ export default function IFoodPaymentScreen() {
                     Já realizei o pagamento
                 </button>
 
-                <button onClick={() => navigate('/')} className="mt-6 font-bold text-[#6B21A8]">
+                <button onClick={() => navigate('/')} className="mt-6 font-bold" style={{ color: 'var(--primary)' }}>
                     Voltar ao Cardápio
                 </button>
             </div>
@@ -158,7 +159,7 @@ export default function IFoodPaymentScreen() {
                 </div>
                 <h2 className="font-bold text-2xl mb-2">Pedido Recebido!</h2>
                 <p className="text-gray-500 mb-8">A cozinha já está preparando o seu pedido.</p>
-                <button onClick={() => navigate('/')} className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-md">
+                <button onClick={() => navigate('/')} className="w-full text-white font-bold py-3.5 rounded-md transition-opacity hover:opacity-90" style={{ backgroundColor: 'var(--primary)' }}>
                     Voltar ao Início
                 </button>
             </div>
@@ -178,7 +179,7 @@ export default function IFoodPaymentScreen() {
             className="flex flex-col min-h-screen bg-gray-50 pb-32 font-sans"
         >
             <header className="sticky top-0 z-50 bg-white shadow-sm flex items-center justify-between p-4 mb-2">
-                <button onClick={() => navigate(-1)} className="p-1 text-purple-600 rounded-full active:bg-gray-100">
+                <button onClick={() => navigate(-1)} className="p-1 rounded-full active:bg-gray-100" style={{ color: 'var(--primary)' }}>
                     <ArrowLeft size={24} />
                 </button>
                 <h1 className="font-bold text-gray-800 text-lg flex-1 text-center">Forma de pagamento</h1>
@@ -189,7 +190,10 @@ export default function IFoodPaymentScreen() {
                 <h3 className="font-bold text-gray-800">Escolha a forma de pagamento</h3>
 
                 {/* PIX Option */}
-                <label className={`flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-colors ${paymentMethod === 'pix' ? 'border-purple-600 bg-purple-50' : 'border-gray-200'}`}>
+                <label
+                    className={`flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-colors ${paymentMethod === 'pix' ? 'bg-gray-50' : 'border-gray-200'}`}
+                    style={paymentMethod === 'pix' ? { borderColor: 'var(--primary)', color: 'var(--primary)' } : {}}
+                >
                     <input type="radio" name="payment" value="pix" checked={paymentMethod === 'pix'} onChange={() => setPaymentMethod('pix')} className="accent-purple-600 w-5 h-5" />
                     <div className="flex-1">
                         <h4 className="font-bold text-gray-800">Pix</h4>
@@ -198,7 +202,10 @@ export default function IFoodPaymentScreen() {
                 </label>
 
                 {/* Credit Card Option */}
-                <label className={`flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-colors ${paymentMethod === 'credit_card' ? 'border-purple-600 bg-purple-50' : 'border-gray-200'}`}>
+                <label
+                    className={`flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-colors ${paymentMethod === 'credit_card' ? 'bg-gray-50' : 'border-gray-200'}`}
+                    style={paymentMethod === 'credit_card' ? { borderColor: 'var(--primary)', color: 'var(--primary)' } : {}}
+                >
                     <input type="radio" name="payment" value="credit_card" checked={paymentMethod === 'credit_card'} onChange={() => setPaymentMethod('credit_card')} className="accent-purple-600 w-5 h-5" />
                     <div className="flex-1 flex items-center gap-2">
                         <CreditCard size={20} className="text-gray-600" />
@@ -277,7 +284,8 @@ export default function IFoodPaymentScreen() {
                 <button
                     onClick={handleFinishPayment}
                     disabled={!isCcValid || isProcessing || total < 0}
-                    className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-md disabled:bg-gray-300 disabled:text-gray-500 active:bg-purple-800 transition-colors flex justify-center items-center"
+                    className="w-full text-white font-bold py-3.5 rounded-md disabled:bg-gray-300 disabled:text-gray-500 transition-all flex justify-center items-center hover:opacity-90"
+                    style={{ backgroundColor: (!isCcValid || isProcessing || total < 0) ? '' : 'var(--primary)' }}
                 >
                     {isProcessing ? 'Processando...' : 'Finalizar pagamento'}
                 </button>

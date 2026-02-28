@@ -60,13 +60,13 @@ export default function IFoodCartScreen() {
         >
             {/* Header Fixo */}
             <header className="sticky top-0 z-50 bg-white shadow-sm flex items-center justify-between p-4 mb-2">
-                <button onClick={() => navigate(-1)} className="p-1 text-purple-600 rounded-full active:bg-gray-100 transition-colors">
+                <button onClick={() => navigate(-1)} className="p-1 rounded-full active:bg-gray-100 transition-colors" style={{ color: 'var(--primary)' }}>
                     <ArrowLeft size={24} />
                 </button>
                 <div className="flex-1 flex justify-center items-center gap-2">
                     <h1 className="font-bold text-gray-800 text-lg">Carrinho</h1>
                     {cartCount > 0 && (
-                        <span className="bg-purple-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                        <span className="text-white text-xs font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--primary)' }}>
                             {cartCount}
                         </span>
                     )}
@@ -116,14 +116,14 @@ export default function IFoodCartScreen() {
                                     <div className="flex items-center gap-4 mt-2 self-start">
                                         <div className="flex items-center bg-gray-50 rounded-lg p-1 border">
                                             {item.quantity === 1 ? (
-                                                <motion.button whileTap={{ scale: 0.8 }} onClick={() => removeFromCart(item.id)} className="w-8 h-8 flex items-center justify-center text-purple-600"><Trash2 size={16} /></motion.button>
+                                                <motion.button whileTap={{ scale: 0.8 }} onClick={() => removeFromCart(item.id)} className="w-8 h-8 flex items-center justify-center" style={{ color: 'var(--primary)' }}><Trash2 size={16} /></motion.button>
                                             ) : (
-                                                <motion.button whileTap={{ scale: 0.8 }} onClick={() => updateQuantity(item.id, -1)} className="w-8 h-8 flex items-center justify-center text-purple-600"><Minus size={16} /></motion.button>
+                                                <motion.button whileTap={{ scale: 0.8 }} onClick={() => updateQuantity(item.id, -1)} className="w-8 h-8 flex items-center justify-center" style={{ color: 'var(--primary)' }}><Minus size={16} /></motion.button>
                                             )}
 
                                             <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
 
-                                            <motion.button whileTap={{ scale: 0.8 }} onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 flex items-center justify-center text-purple-600"><Plus size={16} /></motion.button>
+                                            <motion.button whileTap={{ scale: 0.8 }} onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 flex items-center justify-center" style={{ color: 'var(--primary)' }}><Plus size={16} /></motion.button>
                                         </div>
                                     </div>
 
@@ -149,13 +149,13 @@ export default function IFoodCartScreen() {
                         <div className="flex gap-2">
                             <button
                                 onClick={() => setShowCoupons(true)}
-                                className="w-full flex items-center justify-between border rounded-lg py-3 px-4 hover:border-purple-600 transition-colors bg-white group"
+                                className="w-full flex items-center justify-between border rounded-lg py-3 px-4 transition-colors bg-white group hover:bg-gray-50"
                             >
                                 <div className="flex items-center gap-2">
-                                    <Tag className="text-gray-400 group-hover:text-purple-600 transition-colors" size={20} />
-                                    <span className="text-sm font-medium text-gray-700 group-hover:text-purple-700">Selecione um cupom</span>
+                                    <Tag className="text-gray-400 transition-colors" size={20} style={{ color: 'var(--primary)' }} />
+                                    <span className="text-sm font-medium text-gray-700" style={{ color: 'var(--primary)' }}>Selecione um cupom</span>
                                 </div>
-                                <div className="bg-purple-50 text-purple-700 text-xs font-bold px-3 py-1 rounded-full">
+                                <div className="bg-gray-100 text-xs font-bold px-3 py-1 rounded-full" style={{ color: 'var(--primary)' }}>
                                     {availableCoupons.length} disponíveis
                                 </div>
                             </button>
@@ -213,7 +213,8 @@ export default function IFoodCartScreen() {
                         whileTap={{ scale: 0.96 }}
                         onClick={handleFinish}
                         disabled={cartCount === 0}
-                        className="w-full bg-[#6B21A8] text-white font-bold py-3.5 rounded-lg disabled:opacity-50 active:bg-purple-800 transition-colors"
+                        className="w-full text-white font-bold py-3.5 rounded-lg disabled:opacity-50 transition-colors hover:opacity-90"
+                        style={{ backgroundColor: cartCount === 0 ? '' : 'var(--primary)' }}
                     >
                         CONTINUAR
                     </motion.button>
@@ -234,7 +235,7 @@ export default function IFoodCartScreen() {
                             onClick={e => e.stopPropagation()}
                         >
                             <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-6"></div>
-                            <h2 className="text-2xl font-black text-purple-900 mb-2">Quem é você?</h2>
+                            <h2 className="text-2xl font-black mb-2" style={{ color: 'var(--primary)' }}>Quem é você?</h2>
                             <p className="text-gray-500 text-sm mb-6">Para agilizar seu pedido e não precisarmos criar senha, só preencha os dados abaixo e pronto!</p>
 
                             <div className="flex flex-col gap-4 mb-8">
@@ -253,7 +254,8 @@ export default function IFoodCartScreen() {
                             <button
                                 onClick={handleSaveGuest}
                                 disabled={guestName.length < 3 || guestPhone.length < 10}
-                                className="w-full bg-[#6B21A8] text-white font-bold py-4 rounded-xl disabled:bg-gray-300 active:bg-purple-800"
+                                className="w-full text-white font-bold py-4 rounded-xl disabled:bg-gray-300 transition-colors hover:opacity-90 mt-4"
+                                style={{ backgroundColor: (guestName.length < 3 || guestPhone.length < 10) ? '' : 'var(--primary)' }}
                             >
                                 Confirmar e Ir para Entrega
                             </button>
