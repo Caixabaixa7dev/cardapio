@@ -67,7 +67,7 @@ export default function CouponSplash() {
                             <div className="flex-1 pl-6">
                                 <h3 className="font-black text-lg text-gray-900">{coupon.title}</h3>
                                 <p className="text-xs text-gray-500 font-medium">
-                                    Apenas no {storeName || 'Açai Rino'}<br />
+                                    Apenas no {storeName || 'Açaí e Granola'}<br />
                                     {coupon.description}
                                 </p>
                             </div>

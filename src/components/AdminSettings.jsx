@@ -96,7 +96,7 @@ export default function AdminSettings() {
                         type="text"
                         value={storeName}
                         onChange={(e) => setStoreName(e.target.value)}
-                        placeholder="Ex: Açai Rino Delivery"
+                        placeholder="Ex: Açaí e Granola Delivery"
                         className="w-full p-4 border border-gray-200 rounded-xl outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-100 transition-all font-medium text-gray-800"
                         required
                     />
