@@ -14,8 +14,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default async function handler(req, res) {
-    let storeName = 'Açaí e Granola';
-    let logoUrl = 'https://deliveryacaiegranola.vercel.app/assets/logo.png';
+    const host = req.headers.host || 'delivery.vercel.app';
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const siteUrl = `${protocol}://${host}`;
+
+    let storeName = 'Nosso Delivery';
+    let logoUrl = `${siteUrl}/temp_logo.webp`;
     let description = 'A melhor experiência em delivery, na velocidade do seu desejo!';
 
     try {
@@ -25,16 +29,18 @@ export default async function handler(req, res) {
         if (docSnap.exists()) {
             const data = docSnap.data();
             if (data.storeName) storeName = data.storeName;
-            if (data.logoUrl) logoUrl = data.logoUrl;
+            if (data.logoUrl) {
+                if (data.logoUrl.startsWith('/')) {
+                    logoUrl = `${siteUrl}${data.logoUrl}`;
+                } else {
+                    logoUrl = data.logoUrl;
+                }
+            }
             if (data.description) description = data.description;
         }
     } catch (error) {
         console.error("Error fetching store profile for OG Tags:", error);
     }
-
-    const host = req.headers.host || 'deliveryacaiegranola.vercel.app';
-    const protocol = req.headers['x-forwarded-proto'] || 'https';
-    const siteUrl = `${protocol}://${host}`;
 
     const html = `<!DOCTYPE html>
 <html lang="pt-BR">
